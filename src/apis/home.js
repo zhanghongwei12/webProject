@@ -20,3 +20,9 @@ export const getHotAPI = () => {
         url: '/home/hot'
     })
 }
+
+export const getGoodsAPI = () => {
+    return http({
+        url: '/home/goods'
+    })
+}
