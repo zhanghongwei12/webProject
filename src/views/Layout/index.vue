@@ -3,7 +3,8 @@
 </script>
 
 <template>
-<!--  一级路由出口-->
+  <div>我是主页</div>
+  <!-- 二级路由出口 -->
   <router-view></router-view>
 </template>
 
