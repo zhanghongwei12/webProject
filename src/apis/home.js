@@ -13,3 +13,10 @@ export const getNewAPI = () => {
         url: '/home/new'
     })
 }
+
+//  人气推荐
+export const getHotAPI = () => {
+    return http({
+        url: '/home/hot'
+    })
+}
