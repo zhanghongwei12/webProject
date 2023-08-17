@@ -35,6 +35,21 @@ const tabChange = () => {
   data.value.page = 1
   getGoods(data.value)
 }
+// 禁用加载标识
+const disabled = ref(false)
+// 无限加载方法
+const load = async () => {
+  // 页数加一
+  data.value.page++
+  // 加载新数据
+  const res = await getSubCategoryAPI(data.value)
+  // 合并数据
+  goodsList.value = [...goodsList.value, ...res.data.result.items]
+  // console.log(goodsList.value, 'goodsList')
+  if(res.data.result.items.length === 0) {
+    disabled.value = true
+  }
+}
 
 </script>
 
@@ -55,7 +70,7 @@ const tabChange = () => {
         <el-tab-pane label="最高人气" name="orderNum"></el-tab-pane>
         <el-tab-pane label="评论最多" name="evaluateNum"></el-tab-pane>
       </el-tabs>
-      <div class="body">
+      <div class="body" v-infinite-scroll="load" :infinite-scroll-disabled="disabled">
         <!-- 商品列表-->
         <goods-item v-for="good in goodsList" :key="good.id" :good="good"></goods-item>
       </div>
