@@ -15,6 +15,9 @@ onMounted(() => categoryStore.getCategory())
   <LayoutFixed></LayoutFixed>
   <LayoutNav />
   <LayoutHeader />
+  <!-- 通过加上key值，是组件不再复用，从而解决组件缓存问题 -->
+  <!-- 组件缓存问题会导致钩子函数不再调用，从而无法请求最新的数据 -->
+<!--  <RouterView :key="$route.fullPath" />-->
   <RouterView />
   <LayoutFooter />
 </template>

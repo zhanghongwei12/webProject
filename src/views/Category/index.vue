@@ -1,7 +1,7 @@
 <script setup>
 import { getCategoryAPI } from "@/apis/category";
 import { ref, onMounted } from "vue";
-import { useRoute } from "vue-router";
+import { useRoute, onBeforeRouteUpdate } from "vue-router";
 
 // 引入轮播图
 import HomeBanner from "@/views/Home/components/HomeBanner.vue";
@@ -11,14 +11,18 @@ import GoodsItem from "@/views/Home/components/GoodsItem.vue";
 const route = useRoute()
 
 const categoryData = ref({})
-const getCategory = async () => {
-  const res = await getCategoryAPI(route.params.id)
+const getCategory = async (id=route.params.id) => {
+  const res = await getCategoryAPI(id)
   categoryData.value = res.data.result
   console.log(res)
 }
 
 onMounted(() => getCategory())
 
+// 在路由更新时，Banner 不用重复请求，只需重新请求分类即可, 从而解决组件缓存问题
+onBeforeRouteUpdate((to) => {
+  getCategory(to.params.id)
+})
 
 </script>
 
