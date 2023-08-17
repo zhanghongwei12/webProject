@@ -29,6 +29,13 @@ const getGoods = async () => {
 
 onMounted(() => getGoods())
 
+// 切换tab 栏
+const tabChange = () => {
+  // 页数重置为 1
+  data.value.page = 1
+  getGoods(data.value)
+}
+
 </script>
 
 <template>
@@ -43,7 +50,7 @@ onMounted(() => getGoods())
       </el-breadcrumb>
     </div>
     <div class="sub-container">
-      <el-tabs>
+      <el-tabs v-model="data.sortField" @tab-change="tabChange">
         <el-tab-pane label="最新商品" name="publishTime"></el-tab-pane>
         <el-tab-pane label="最高人气" name="orderNum"></el-tab-pane>
         <el-tab-pane label="评论最多" name="evaluateNum"></el-tab-pane>
