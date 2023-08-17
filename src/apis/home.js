@@ -1,9 +1,12 @@
 import http from '@/utils/http'
 
 // 获取 banner
-export const getBannerAPI = () => {
+export const getBannerAPI = (distributionSite) => {
     return http({
-        url: 'home/banner'
+        url: 'home/banner',
+        params: {
+            distributionSite
+        }
     })
 }
 

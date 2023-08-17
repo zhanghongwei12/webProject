@@ -3,6 +3,9 @@ import { getCategoryAPI } from "@/apis/category";
 import { ref, onMounted } from "vue";
 import { useRoute } from "vue-router";
 
+// 引入轮播图
+import HomeBanner from "@/views/Home/components/HomeBanner.vue";
+
 // 获取当前的路由
 const route = useRoute()
 
@@ -27,6 +30,7 @@ onMounted(() => getCategory())
           <el-breadcrumb-item>{{ categoryObj.name }}</el-breadcrumb-item>
         </el-breadcrumb>
       </div>
+      <home-banner distributionSite="2" style="margin: 0 auto"></home-banner>
     </div>
   </div>
 </template>
@@ -109,5 +113,6 @@ onMounted(() => getCategory())
   .bread-container {
     padding: 25px 0;
   }
+
 }
 </style>
