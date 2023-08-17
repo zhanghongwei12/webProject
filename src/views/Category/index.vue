@@ -5,14 +5,16 @@ import { useRoute } from "vue-router";
 
 // 引入轮播图
 import HomeBanner from "@/views/Home/components/HomeBanner.vue";
+import GoodsItem from "@/views/Home/components/GoodsItem.vue";
 
 // 获取当前的路由
 const route = useRoute()
 
-const categoryObj = ref({})
+const categoryData = ref({})
 const getCategory = async () => {
   const res = await getCategoryAPI(route.params.id)
-  categoryObj.value = res.data.result
+  categoryData.value = res.data.result
+  console.log(res)
 }
 
 onMounted(() => getCategory())
@@ -27,10 +29,31 @@ onMounted(() => getCategory())
       <div class="bread-container">
         <el-breadcrumb separator=">">
           <el-breadcrumb-item :to="{ path: '/' }">首页</el-breadcrumb-item>
-          <el-breadcrumb-item>{{ categoryObj.name }}</el-breadcrumb-item>
+          <el-breadcrumb-item>{{ categoryData.name }}</el-breadcrumb-item>
         </el-breadcrumb>
       </div>
-      <home-banner distributionSite="2" style="margin: 0 auto"></home-banner>
+      <!--  轮播图实现    -->
+      <home-banner distributionSite="2"></home-banner>
+      <!--    分类数据模板   -->
+      <div class="sub-list">
+        <h3>全部分类</h3>
+        <ul>
+          <li v-for="i in categoryData.children" :key="i.id">
+            <RouterLink to="/">
+              <img :src="i.picture" />
+              <p>{{ i.name }}</p>
+            </RouterLink>
+          </li>
+        </ul>
+      </div>
+      <div class="ref-goods" v-for="item in categoryData.children" :key="item.id">
+        <div class="head">
+          <h3>- {{ item.name }}-</h3>
+        </div>
+        <div class="body">
+          <GoodsItem v-for="good in item.goods" :good="good" :key="good.id" />
+        </div>
+      </div>
     </div>
   </div>
 </template>
