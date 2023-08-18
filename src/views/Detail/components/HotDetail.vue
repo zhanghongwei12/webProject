@@ -3,6 +3,7 @@ import { fetchHotGoodsAPI } from "@/apis/detail";
 import { ref, onMounted } from "vue";
 import { useRoute } from "vue-router";
 
+
 // 适配二十四小时热榜还是周热榜
 const props = defineProps({
   hotType: Number
