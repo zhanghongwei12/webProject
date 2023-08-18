@@ -1,6 +1,10 @@
 <script setup>
 // 表单校验
 import {ref} from "vue";
+import { loginAPI } from "@/apis/user";
+import 'element-plus/theme-chalk/el-message.css'
+import { ElMessage } from 'element-plus'
+import { useRouter } from "vue-router";
 
 const form = ref({
   account: '',
@@ -31,11 +35,23 @@ const rules = {
 }
 
 const formRef = ref(null)
-
+const router = useRouter()
 // 登录按钮提交函数
 const submit = () => {
-  formRef.value.validate((valid) => {
-    console.log(valid, 'valid')
+  formRef.value.validate(async (valid) => {
+    if(valid) {
+      const { account, password } = form.value
+      const res = await loginAPI({ account, password })
+      console.log(res)
+      if(res.status === 200) {
+        ElMessage({
+          type: "success",
+          message: '登录成功'
+        })
+        router.replace({ path: '/' })
+      }
+
+    }
   })
 }
 
