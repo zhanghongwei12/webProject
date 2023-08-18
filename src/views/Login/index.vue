@@ -1,14 +1,14 @@
 <script setup>
 // 表单校验
 import {ref} from "vue";
-import { loginAPI } from "@/apis/user";
 import 'element-plus/theme-chalk/el-message.css'
 import { ElMessage } from 'element-plus'
 import { useRouter } from "vue-router";
+import { useUserStore } from "@/stores/user";
 
 const form = ref({
-  account: '',
-  password: '',
+  account: 'xiaotuxian001',
+  password: '123456',
   agree: true
 })
 
@@ -41,15 +41,16 @@ const submit = () => {
   formRef.value.validate(async (valid) => {
     if(valid) {
       const { account, password } = form.value
-      const res = await loginAPI({ account, password })
-      console.log(res)
-      if(res.status === 200) {
-        ElMessage({
+      const userStore = useUserStore()
+      await userStore.getUserInfo({ account, password })
+      // console.log(res)
+
+      ElMessage({
           type: "success",
           message: '登录成功'
         })
-        router.replace({ path: '/' })
-      }
+      router.replace({ path: '/' })
+
 
     }
   })
