@@ -30,8 +30,13 @@ const rules = {
   ]
 }
 
+const formRef = ref(null)
+
+// 登录按钮提交函数
 const submit = () => {
-  console.log(form.value)
+  formRef.value.validate((valid) => {
+    console.log(valid, 'valid')
+  })
 }
 
 </script>
@@ -58,7 +63,7 @@ const submit = () => {
         </nav>
         <div class="account-box">
           <div class="form">
-            <el-form :model="form" :rules="rules" label-position="right" label-width="60px"
+            <el-form ref="formRef" :model="form" :rules="rules" label-position="right" label-width="60px"
                      status-icon>
               <el-form-item prop="account" label="账户">
                 <el-input v-model="form.account" />
