@@ -41,7 +41,7 @@ watch([elementX, elementY, isOutside], () => {
   // 有效范围内，滑块的位置
   if( elementX.value > 100 && elementX.value < 300) {
     left.value = elementX.value - 100
-    console.log(left.value)
+    // console.log(left.value)
   }
   if( elementY.value > 100 && elementY.value < 300) {
     top.value = elementY.value - 100
