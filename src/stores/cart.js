@@ -9,13 +9,17 @@ export const useCartStore = defineStore('cart', () => {
     const userStore = useUserStore()
     // 是否登录的标志
     const isLogin = computed(() => userStore.userInfo.token)
+    // 更新购物车列表数据
+    const updateCartList = async () => {
+        const res = await findNewCartListAPI()
+        cartList.value = res.data.result
+    }
     // 向购物车添加商品
     const addCart = async (good) => {
         if(isLogin.value) {
             const { skuId, count } = good
             await addCartListAPI({ skuId, count})
-            const res = await findNewCartListAPI()
-            cartList.value = res.data.result
+            updateCartList()
         }else {
             // 添加商品逻辑
             const item = cartList.value.find(item => item.skuId === good.skuId)
@@ -32,13 +36,16 @@ export const useCartStore = defineStore('cart', () => {
     const delCart = async (skuId) => {
         if(isLogin.value)  {
             await deleteCartListAPI([skuId])
-            const res = await findNewCartListAPI()
-            cartList.value = res.data.result
+            updateCartList()
         }else {
             const delIdx = cartList.value.findIndex(item => item.skuId === skuId)
             cartList.value.splice(delIdx, 1)
         }
 
+    }
+    // 清除购物车列表
+    const clearCartList = () => {
+        cartList.value = []
     }
     // 统计商品总数量
     const allCount = computed(() => {
@@ -86,7 +93,8 @@ export const useCartStore = defineStore('cart', () => {
         isAll,
         allChange,
         selectedCount,
-        selectedPrice
+        selectedPrice,
+        clearCartList
     }
 }, {
     persist: true
