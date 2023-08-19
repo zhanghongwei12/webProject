@@ -15,9 +15,15 @@ export const useCartStore = defineStore('cart', () => {
             cartList.value.push(good)
         }
     }
+    // 删除购物车
+    const delCart = (skuId) => {
+        const delIdx = cartList.value.findIndex(item => item.skuId === skuId)
+        cartList.value.splice(delIdx, 1)
+    }
     return {
         cartList,
-        addCart
+        addCart,
+        delCart
     }
 }, {
     persist: true
