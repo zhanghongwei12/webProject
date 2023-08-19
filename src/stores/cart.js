@@ -8,10 +8,10 @@ export const useCartStore = defineStore('cart', () => {
     const cartList = ref([])
     const userStore = useUserStore()
     // 是否登录的标志
-    const isLogin = userStore.userInfo.token
+    const isLogin = computed(() => userStore.userInfo.token)
     // 向购物车添加商品
     const addCart = async (good) => {
-        if(isLogin) {
+        if(isLogin.value) {
             const { skuId, count } = good
             await addCartListAPI({ skuId, count})
             const res = await findNewCartListAPI()
