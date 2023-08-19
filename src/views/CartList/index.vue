@@ -3,9 +3,15 @@ import { useCartStore } from "@/stores/cart";
 
 const cartStore = useCartStore()
 
+// 修改单选框状态
 const singleChange = (selected, i) => {
   cartStore.singleChange(selected, i.skuId)
 }
+// 修改全选框状态
+const allChange = (selected) => {
+  cartStore.allChange(selected)
+}
+
 </script>
 
 <template>
@@ -16,8 +22,8 @@ const singleChange = (selected, i) => {
           <thead>
           <tr>
             <th width="120">
-
-              <el-checkbox  />
+              <!--   单选框           -->
+              <el-checkbox :model-value="cartStore.isAll" @change="allChange" />
             </th>
             <th width="400">商品信息</th>
             <th width="220">单价</th>
