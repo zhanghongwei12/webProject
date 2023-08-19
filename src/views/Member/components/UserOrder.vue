@@ -26,11 +26,17 @@ const getOrderList = async () => {
 }
 onMounted(() => getOrderList())
 
+// tab 切换
+const tabChange = (val) => {
+  params.value.orderState = val
+  getOrderList()
+}
+
 </script>
 
 <template>
   <div class="order-container">
-    <el-tabs>
+    <el-tabs @tab-change="tabChange">
       <!-- tab切换 -->
       <el-tab-pane v-for="item in tabTypes" :key="item.name" :label="item.label" />
 
