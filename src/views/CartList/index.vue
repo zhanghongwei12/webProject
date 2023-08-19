@@ -2,6 +2,10 @@
 import { useCartStore } from "@/stores/cart";
 
 const cartStore = useCartStore()
+
+const singleChange = (selected, i) => {
+  cartStore.singleChange(selected, i.skuId)
+}
 </script>
 
 <template>
@@ -12,7 +16,8 @@ const cartStore = useCartStore()
           <thead>
           <tr>
             <th width="120">
-              <el-checkbox/>
+
+              <el-checkbox  />
             </th>
             <th width="400">商品信息</th>
             <th width="220">单价</th>
@@ -25,7 +30,8 @@ const cartStore = useCartStore()
           <tbody>
           <tr v-for="i in cartStore.cartList" :key="i.id">
             <td>
-              <el-checkbox />
+              <!--单选框 分两步走 :model-value 负责将 store 中的状态同步至单选框 @change 负责将单选框的变化同步回 store-->
+              <el-checkbox :model-value="i.selected" @change="singleChange($event, i)" />
             </td>
             <td>
               <div class="goods">

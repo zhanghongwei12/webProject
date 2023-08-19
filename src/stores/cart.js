@@ -32,12 +32,18 @@ export const useCartStore = defineStore('cart', () => {
             return a + item.count * item.price
         }, 0)
     })
+    // 修改商品单选框状态
+    const singleChange = (selected, skuId) => {
+        const item = cartList.value.find(item => item.skuId === skuId)
+        item.selected = selected
+    }
     return {
         cartList,
         addCart,
         delCart,
         allCount,
-        allPrice
+        allPrice,
+        singleChange
     }
 }, {
     persist: true
