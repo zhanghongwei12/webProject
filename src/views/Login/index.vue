@@ -39,6 +39,7 @@ const router = useRouter()
 // 登录按钮提交函数
 const submit = () => {
   formRef.value.validate(async (valid) => {
+    // valid 所有项都通过校验才为 true
     if(valid) {
       const { account, password } = form.value
       const userStore = useUserStore()

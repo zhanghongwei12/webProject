@@ -3,7 +3,6 @@ import {ref} from "vue";
 import { loginAPI } from "@/apis/user";
 import { useCartStore } from "@/stores/cart";
 import { mergeCartListAPI } from "@/apis/cart";
-
 export const useUserStore = defineStore('user', () => {
     const userInfo = ref({})
     const cartStore = useCartStore()
