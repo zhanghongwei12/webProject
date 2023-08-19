@@ -1,7 +1,7 @@
 // 购物车列表
 import { defineStore } from "pinia";
 import { ref, computed } from "vue";
-import { addCartListAPI, findNewCartListAPI } from "@/apis/cart";
+import { addCartListAPI, findNewCartListAPI, deleteCartListAPI } from "@/apis/cart";
 import { useUserStore } from "@/stores/user";
 
 export const useCartStore = defineStore('cart', () => {
@@ -29,9 +29,16 @@ export const useCartStore = defineStore('cart', () => {
 
     }
     // 删除购物车
-    const delCart = (skuId) => {
-        const delIdx = cartList.value.findIndex(item => item.skuId === skuId)
-        cartList.value.splice(delIdx, 1)
+    const delCart = async (skuId) => {
+        if(isLogin.value)  {
+            await deleteCartListAPI([skuId])
+            const res = await findNewCartListAPI()
+            cartList.value = res.data.result
+        }else {
+            const delIdx = cartList.value.findIndex(item => item.skuId === skuId)
+            cartList.value.splice(delIdx, 1)
+        }
+
     }
     // 统计商品总数量
     const allCount = computed(() => {
